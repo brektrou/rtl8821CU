@@ -24,7 +24,7 @@ To make use of the **DKMS** feature with this project, do the following:
 ```
 DRV_NAME=rtl8821CU
 DRV_VERSION=5.4.1
-sudo cp -r ${DRV_NAME} /usr/src/${DRV_NAME}-${DRV_VERSION}
+sudo cp -r ~/build/${DRV_NAME} /usr/src/${DRV_NAME}-${DRV_VERSION}
 sudo dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
 sudo dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
 sudo dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
@@ -38,7 +38,7 @@ sudo dkms remove ${DRV_NAME}/${DRV_VERSION} --all
 ## Build and install without DKMS
 Use following commands:
 ```
-cd rtl8821CU
+cd ~/build/rtl8821CU
 make
 sudo make install
 ```
