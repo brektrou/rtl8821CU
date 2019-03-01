@@ -47,7 +47,7 @@ ls /lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/rtl8821cu
 ```
 Make sure `8821cu.ko` file present on that directory
 
-Check with **DKMS** (if installing via **DKMS**):
+### Check with **DKMS** (if installing via **DKMS**):
 
 ``
 sudo dkms status
