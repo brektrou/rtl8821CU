@@ -42,7 +42,7 @@ make
 sudo make install
 ```
 ## Checking installed driver
-If you successfully install the driver, the driver is installed on `/lib/modules/<linux version>/kernel/drivers/net/wireless/realtek/rtl8xxxu`. Check the driver with the `ls` command
+If you successfully install the driver, the driver is installed on `/lib/modules/<linux version>/kernel/drivers/net/wireless/realtek/rtl8xxxu`. Check the driver with the `ls` command:
 ```
 ls /lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/rtl8xxxu
 ```
