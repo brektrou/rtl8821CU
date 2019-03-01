@@ -11,29 +11,29 @@ git clone https://github.com/brektrou/rtl8821CU.git
 DKMS is a system which will automatically recompile and install a kernel module when a new kernel gets installed or updated. To make use of DKMS, install the dkms package.
 
 ### Debian/Ubuntu:
-
-    sudo apt-get install dkms
-
+```
+sudo apt-get install dkms
+```
 ### Arch Linux/Manjaro:
-
-    sudo pacman -S dkms
-
-To make use of the DKMS feature with this project, do the following:
-
-    DRV_NAME=rtl8821CU
-    DRV_VERSION=5.4.1
-    sudo cp -r ${DRV_NAME} /usr/src/${DRV_NAME}-${DRV_VERSION}
-    sudo chown -hRv root:root /usr/src/${DRV_NAME}-${DRV_VERSION}
-    sudo dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
-    sudo dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
-    sudo dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
-
+```
+sudo pacman -S dkms
+```
+To make use of the **DKMS** feature with this project, do the following:
+```
+DRV_NAME=rtl8821CU
+DRV_VERSION=5.4.1
+sudo cp -r ${DRV_NAME} /usr/src/${DRV_NAME}-${DRV_VERSION}
+sudo chown -hRv root:root /usr/src/${DRV_NAME}-${DRV_VERSION}
+sudo dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
+sudo dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
+sudo dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
+```
 If you later on want to remove it again, do the following:
-
-    DRV_NAME=rtl8821CU
-    DRV_VERSION=5.4.1
-    sudo dkms remove ${DRV_NAME}/${DRV_VERSION} --all
-
+```
+DRV_NAME=rtl8821CU
+DRV_VERSION=5.4.1
+sudo dkms remove ${DRV_NAME}/${DRV_VERSION} --all
+```
 ## Build and install without DKMS
 Use following commands:
 ```
@@ -47,6 +47,11 @@ If you successfully install the driver, the driver is installed on `/lib/modules
 ls /lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/rtl8821cu
 ```
 Make sure `8821cu.ko` file present on that directory
+
+Check with **DKMS**:
+``
+sudo dkms status
+``
 
 ## Raspberry Pi
 To build this driver on Raspberry Pi you need to set correct platform in Makefile.
