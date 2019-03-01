@@ -23,7 +23,6 @@ To make use of the **DKMS** feature with this project, do the following:
 DRV_NAME=rtl8821CU
 DRV_VERSION=5.4.1
 sudo cp -r ${DRV_NAME} /usr/src/${DRV_NAME}-${DRV_VERSION}
-sudo chown -hRv root:root /usr/src/${DRV_NAME}-${DRV_VERSION}
 sudo dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
 sudo dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
 sudo dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
@@ -48,7 +47,7 @@ ls /lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/rtl8821cu
 ```
 Make sure `8821cu.ko` file present on that directory
 
-Check with **DKMS**:
+Check with **DKMS** (if installing via **DKMS**):
 
 ``
 sudo dkms status
