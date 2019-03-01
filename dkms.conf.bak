@@ -1,7 +1,0 @@
-PACKAGE_NAME="rtl8821cu"
-PACKAGE_VERSION="5.4.1"
-MAKE="make KVER=${kernelver}"
-CLEAN="make clean"
-BUILT_MODULE_NAME[0]="rtl8821cu"
-DEST_MODULE_LOCATION[0]="/kernel/drivers/net/wireless/realtek/rtl8xxxu"
-AUTOINSTALL="yes"
