@@ -37,6 +37,13 @@ Use following commands in source directory:
 make
 sudo make install
 ```
+## Checking installed driver
+Checking installed driver
+```
+ls /lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/rtl8xxxu
+```
+Make sure `8821cu.ko` file present on that directory
+
 ## Raspberry Pi
 To build this driver on Raspberry Pi you need to set correct platform in Makefile.
 Change
