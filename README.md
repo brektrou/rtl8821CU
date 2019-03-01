@@ -42,7 +42,7 @@ cd rtl8821CU
 make
 sudo make install
 ```
-If you later on want to remove it again, do the following:
+If you later on want to remove it, do the following:
 ```
 cd ~/build/rtl8821CU
 sudo make uninstall
