@@ -2,6 +2,10 @@
 
 Before build this driver make sure `make`, `gcc`, `linux-header` and `git` have been installed in your system
 
+## Clone this repository
+```
+git clone https://github.com/brektrou/rtl8821CU.git
+```
 ## Build and install with DKMS
 
 DKMS is a system which will automatically recompile and install a kernel module when a new kernel gets installed or updated. To make use of DKMS, install the dkms package.
@@ -18,7 +22,6 @@ To make use of the DKMS feature with this project, do the following:
 
     DRV_NAME=rtl8821CU
     DRV_VERSION=5.4.1
-    git clone https://github.com/brektrou/rtl8821CU.git
     sudo cp -r ${DRV_NAME} /usr/src/${DRV_NAME}-${DRV_VERSION}
     sudo chown -hRv root:root /usr/src/${DRV_NAME}-${DRV_VERSION}
     sudo dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
@@ -32,8 +35,9 @@ If you later on want to remove it again, do the following:
     sudo dkms remove ${DRV_NAME}/${DRV_VERSION} --all
 
 ## Build and install without DKMS
-Use following commands in source directory:
+Use following commands:
 ```
+cd rtl8821CU
 make
 sudo make install
 ```
