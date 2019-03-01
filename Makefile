@@ -1196,7 +1196,7 @@ ARCH ?= $(SUBARCH)
 CROSS_COMPILE ?=
 KVER  := $(shell uname -r)
 KSRC := /lib/modules/$(KVER)/build
-MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless
 INSTALL_PREFIX :=
 STAGINGMODDIR := /lib/modules/$(KVER)/kernel/drivers/staging
 endif
@@ -1229,7 +1229,7 @@ ARCH ?= arm
 CROSS_COMPILE ?=
 KVER := $(shell uname -r)
 KSRC := /lib/modules/$(KVER)/build
-MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/realtek/rtl8xxxu/
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless
 INSTALL_PREFIX :=
 endif
 
