@@ -49,27 +49,7 @@ ls /lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/rtl8821cu
 Make sure `8821cu.ko` file present on that directory
 
 Check with **DKMS**:
+
 ``
 sudo dkms status
 ``
-
-## Raspberry Pi
-To build this driver on Raspberry Pi you need to set correct platform in Makefile.
-Change
-```
-CONFIG_PLATFORM_I386_PC = y
-CONFIG_PLATFORM_ARM_RPI = n
-CONFIG_PLATFORM_ARM_RPI3 = n
-```
-to
-```
-CONFIG_PLATFORM_I386_PC = n
-CONFIG_PLATFORM_ARM_RPI = y
-CONFIG_PLATFORM_ARM_RPI3 = n
-```
-For the Raspberry Pi 3 you need to change it to
-```
-CONFIG_PLATFORM_I386_PC = n
-CONFIG_PLATFORM_ARM_RPI = n
-CONFIG_PLATFORM_ARM_RPI3 = y
-```
