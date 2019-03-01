@@ -38,7 +38,7 @@ make
 sudo make install
 ```
 ## Checking installed driver
-Checking installed driver
+To check installed driver, run this command:
 ```
 ls /lib/modules/$(uname -r)/kernel/drivers/net/wireless/realtek/rtl8xxxu
 ```
