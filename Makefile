@@ -1196,9 +1196,9 @@ ARCH ?= $(SUBARCH)
 CROSS_COMPILE ?=
 KVER  := $(shell uname -r)
 KSRC := /lib/modules/$(KVER)/build
-MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/realtek/rtl8xxxu/
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/realtek/rtl8821cu/
 INSTALL_PREFIX :=
-STAGINGMODDIR := /lib/modules/$(KVER)/kernel/drivers/staging
+STAGINGMODDIR := /lib/modules/$(KVER)/kernel/drivers/staging/rtl8821cu
 endif
 
 ifeq ($(CONFIG_PLATFORM_NV_TK1), y)
@@ -1229,7 +1229,7 @@ ARCH ?= arm
 CROSS_COMPILE ?=
 KVER := $(shell uname -r)
 KSRC := /lib/modules/$(KVER)/build
-MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/realtek/rtl8xxxu/
+MODDESTDIR := /lib/modules/$(KVER)/kernel/drivers/net/wireless/realtek/rtl8821cu/
 INSTALL_PREFIX :=
 endif
 
