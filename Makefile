@@ -2185,11 +2185,12 @@ strip:
 	$(CROSS_COMPILE)strip $(MODULE_NAME).ko --strip-unneeded
 
 install:
+	mkdir -p $(MODDESTDIR)
 	install -p -m 644 $(MODULE_NAME).ko  $(MODDESTDIR)
 	/sbin/depmod -a ${KVER}
 
 uninstall:
-	rm -f $(MODDESTDIR)/$(MODULE_NAME).ko
+	rm -rfv $(MODDESTDIR)
 	/sbin/depmod -a ${KVER}
 
 backup_rtlwifi:
