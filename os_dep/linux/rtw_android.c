@@ -653,8 +653,9 @@ int rtw_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 		ret = -ENOMEM;
 		goto exit;
 	}
-
-	if (!access_ok(VERIFY_READ, priv_cmd.buf, priv_cmd.total_len)) {
+		
+// Fix build error for Linux 5.0
+	if (VENDOR_READ, priv_cmd.buf, priv_cmd.total_len) {
 		RTW_INFO("%s: failed to access memory\n", __FUNCTION__);
 		ret = -EFAULT;
 		goto exit;
