@@ -20,20 +20,13 @@ sudo apt-get install dkms
 ```
 sudo pacman -S dkms
 ```
-To make use of the **DKMS** feature with this project, do the following:
+To make use of the **DKMS** feature with this project, just run:
 ```
-DRV_NAME=rtl8821CU
-DRV_VERSION=5.4.1
-sudo cp -r ~/build/${DRV_NAME} /usr/src/${DRV_NAME}-${DRV_VERSION}
-sudo dkms add -m ${DRV_NAME} -v ${DRV_VERSION}
-sudo dkms build -m ${DRV_NAME} -v ${DRV_VERSION}
-sudo dkms install -m ${DRV_NAME} -v ${DRV_VERSION}
+./dkms-install.sh
 ```
-If you later on want to remove it, do the following:
+If you later on want to remove it, run:
 ```
-DRV_NAME=rtl8821CU
-DRV_VERSION=5.4.1
-sudo dkms remove ${DRV_NAME}/${DRV_VERSION} --all
+./dkms-remove.sh
 ```
 ## Build and install without DKMS
 Use following commands:
