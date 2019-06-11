@@ -28,6 +28,23 @@ If you later on want to remove it, run:
 ```
 ./dkms-remove.sh
 ```
+
+### Plug your USB-wifi-adapter into your PC
+If wifi can be detected, congratulations.
+If not, maybe you need to switch your device usb mode by the following steps in terminal:
+1. find your usb-wifi-adapter device ID, like "0bda:1a2b", by type:
+```
+lsusb
+```
+2. switch the mode by type: (the device ID must be yours.)
+
+Need install `usb_modeswitch` (Archlinux: `sudo pacman -S usb_modeswitch`)
+```
+sudo usb_modeswitch -KW -v 0bda -p 1a2b
+```
+
+It should work.
+
 ## Build and install without DKMS
 Use following commands:
 ```
