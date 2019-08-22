@@ -69,3 +69,10 @@ Make sure `8821cu.ko` file present on that directory
 ``
 sudo dkms status
 ``
+### ARM architecture tweak for this driver (this solves compilation problem of this driver):
+
+``
+sudo cp /lib/modules/$(uname -r)/build/arch/arm/Makefile /lib/modules/$(uname -r)/build/arch/arm/Makefile.$(date +%Y%m%d%H%M)
+sudo sed -i 's/-msoft-float//' /lib/modules/$(uname -r)/build/arch/arm/Makefile
+sudo ln -s /lib/modules/$(uname -r)/build/arch/arm /lib/modules/$(uname -r)/build/arch/armv7l
+``
