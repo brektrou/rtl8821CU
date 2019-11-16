@@ -21,6 +21,20 @@ RESULT=$?
 
 echo "Finished running dkms install steps."
 
+echo "Installing usb_modeswitch rule at /usr/lib/udev/rules.d/41-usb_modeswitch_rtl8821CU.rules"
+
+command -v usb_modeswitch >/dev/null 2>&1 || { echo >&2 "You may wish to install usb_modeswitch \
+to automatically enable wi-fi mode"; }
+
+cat <<EOF > /usr/lib/udev/rules.d/41-usb_modeswitch_rtl8821CU.rules
+# Part of the rtl8821CU dkms driver installation
+ACTION!="add|change", GOTO="modeswitch_rules_end"
+SUBSYSTEM!="usb", ACTION!="add",, GOTO="modeswitch_rules_end"
+# Realtek 8821CU Wifi AC USB
+ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="usb_modeswitch '/%k'"
+LABEL="modeswitch_rules_end"
+EOF
+
 if grep -q -e "^CONFIG_DISABLE_IPV6 = y$" "$DRV_DIR/Makefile" ; then
 	if echo "net.ipv6.conf.all.disable_ipv6 = 1
   net.ipv6.conf.default.disable_ipv6 = 1
