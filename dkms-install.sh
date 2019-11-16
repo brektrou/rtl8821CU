@@ -35,6 +35,8 @@ ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="usb_modeswitch '/%k'"
 LABEL="modeswitch_rules_end"
 EOF
 
+udevadm control --reload-rules && udevadm trigger
+
 if grep -q -e "^CONFIG_DISABLE_IPV6 = y$" "$DRV_DIR/Makefile" ; then
 	if echo "net.ipv6.conf.all.disable_ipv6 = 1
   net.ipv6.conf.default.disable_ipv6 = 1
