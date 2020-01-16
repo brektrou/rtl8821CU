@@ -3993,8 +3993,17 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 		hdr_buf[rt_len] |= IEEE80211_RADIOTAP_F_FRAG;
 
 	/* always append FCS */
-	hdr_buf[rt_len] |= IEEE80211_RADIOTAP_F_FCS;
+	//hdr_buf[rt_len] |= IEEE80211_RADIOTAP_F_FCS;
 
+#ifdef CONFIG_RX_PACKET_APPEND_FCS
+        // Start by always indicating FCS is there:
+        hdr_buf[rt_len] |= IEEE80211_RADIOTAP_F_FCS;
+
+        // Next, test for prior conditions that will remove FCS, and update flag accordingly:
+        if(check_fwstate(&padapter->mlmepriv,WIFI_MONITOR_STATE) == _FALSE)
+                if((pattrib->pkt_rpt_type == NORMAL_RX) && (pHalData->ReceiveConfig & RCR_APPFCS))
+                        hdr_buf[rt_len] &= ~IEEE80211_RADIOTAP_F_FCS;
+#endif
 
 	if (0)
 		hdr_buf[rt_len] |= IEEE80211_RADIOTAP_F_DATAPAD;
