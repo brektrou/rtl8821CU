@@ -41,6 +41,7 @@ lsusb
 Need install `usb_modeswitch` (Archlinux: `sudo pacman -S usb_modeswitch`)
 ```
 sudo usb_modeswitch -KW -v 0bda -p 1a2b
+systemctl start bluetooth.service - starting Bluetooth service if it's in inactive state
 ```
 
 It should work.
