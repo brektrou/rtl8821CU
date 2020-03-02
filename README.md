@@ -76,3 +76,8 @@ sudo cp /lib/modules/$(uname -r)/build/arch/arm/Makefile /lib/modules/$(uname -r
 sudo sed -i 's/-msoft-float//' /lib/modules/$(uname -r)/build/arch/arm/Makefile
 sudo ln -s /lib/modules/$(uname -r)/build/arch/arm /lib/modules/$(uname -r)/build/arch/armv7l
 ```
+### Monitor mode
+Use the tool 'iw', please don't use other tools like 'airmon-ng'
+```
+iw dev wlan0 set monitor none
+```
