@@ -20,6 +20,14 @@
 
 #define RTW_PROC_HDL_TYPE_SEQ	0
 #define RTW_PROC_HDL_TYPE_SSEQ	1
+#define RTW_PROC_HDL_TYPE_SZSEQ	2
+
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 6, 0))
+#define HAVE_PROC_OPS_STRUCT
+typedef struct proc_ops rtw_proc_op_t;
+#else
+typedef struct file_operations rtw_proc_op_t;
+#endif
 
 struct rtw_proc_hdl {
 	char *name;
@@ -27,6 +35,10 @@ struct rtw_proc_hdl {
 	union {
 		int (*show)(struct seq_file *, void *);
 		struct seq_operations *seq_op;
+		struct {
+			int (*show)(struct seq_file *, void *);
+			size_t size;
+		} sz;
 	} u;
 	ssize_t (*write)(struct file *file, const char __user *buffer, size_t count, loff_t *pos, void *data);
 };
@@ -37,9 +49,11 @@ struct rtw_proc_hdl {
 #define RTW_PROC_HDL_SSEQ(_name, _show, _write) \
 	{ .name = _name, .type = RTW_PROC_HDL_TYPE_SSEQ, .u.show = _show, .write = _write}
 
+#define RTW_PROC_HDL_SZSEQ(_name, _show, _write, _size) \
+	{ .name = _name, .type = RTW_PROC_HDL_TYPE_SZSEQ, .u.sz.show = _show, .write = _write, .u.sz.size = _size}
+
 #ifdef CONFIG_PROC_DEBUG
 
-struct proc_dir_entry *get_rtw_drv_proc(void);
 int rtw_drv_proc_init(void);
 void rtw_drv_proc_deinit(void);
 struct proc_dir_entry *rtw_adapter_proc_init(struct net_device *dev);
@@ -48,10 +62,9 @@ void rtw_adapter_proc_replace(struct net_device *dev);
 
 #else /* !CONFIG_PROC_DEBUG */
 
-#define get_rtw_drv_proc() NULL
-#define rtw_drv_proc_init() 0
+static inline int rtw_drv_proc_init(void) {return _FAIL;}
 #define rtw_drv_proc_deinit() do {} while (0)
-#define rtw_adapter_proc_init(dev) NULL
+static inline struct proc_dir_entry *rtw_adapter_proc_init(struct net_device *dev) {return NULL;}
 #define rtw_adapter_proc_deinit(dev) do {} while (0)
 #define rtw_adapter_proc_replace(dev) do {} while (0)
 
