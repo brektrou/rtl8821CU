@@ -718,6 +718,10 @@ static u64 rtw_get_systime_us(void)
 	struct timespec ts;
 	get_monotonic_boottime(&ts);
 	return ((u64)ts.tv_sec * 1000000) + ts.tv_nsec / 1000;
+#elif (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 6, 0))
+    struct timespec64 ts;
+	getboottime64(&ts);
+    return ((u64)ts.tv_sec * 1000000) + ts.tv_nsec / 1000;
 #else
 	struct timeval tv;
 	do_gettimeofday(&tv);

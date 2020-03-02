@@ -22,6 +22,13 @@
 #define RTW_PROC_HDL_TYPE_SSEQ	1
 #define RTW_PROC_HDL_TYPE_SZSEQ	2
 
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 6, 0))
+#define HAVE_PROC_OPS_STRUCT
+typedef struct proc_ops rtw_proc_op_t;
+#else
+typedef struct file_operations rtw_proc_op_t;
+#endif
+
 struct rtw_proc_hdl {
 	char *name;
 	u8 type;
