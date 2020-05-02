@@ -231,6 +231,7 @@ static struct usb_device_id rtw_usb_id_tbl[] = {
 	{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDER_ID_REALTEK, 0xC82B, 0xff, 0xff, 0xff), .driver_info = RTL8821C}, /* 8821CU */
 	{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDER_ID_REALTEK, 0xC811, 0xff, 0xff, 0xff), .driver_info = RTL8821C}, /* 8811CU */
 	{USB_DEVICE_AND_INTERFACE_INFO(USB_VENDER_ID_REALTEK, 0x8811, 0xff, 0xff, 0xff), .driver_info = RTL8821C}, /* 8811CU */	
+	{USB_DEVICE_AND_INTERFACE_INFO (USB_VENDER_ID_REALTEK, 0x2006, 0xff, 0xff, 0xff), .driver_info = RTL8821C}, /* TOTOLINK A650UA v3 */	
 	/*=== Customer ID ===*/
 	{USB_DEVICE(0x2001, 0x331d), .driver_info = RTL8821C}, /* D-Link - DWA-171C */
 #endif
