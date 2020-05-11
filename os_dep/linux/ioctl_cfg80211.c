@@ -27,7 +27,7 @@
 #define DBG_RTW_CFG80211_MESH_CONF 0
 #endif
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 0, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 0, 0) || RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,2))
 #define STATION_INFO_INACTIVE_TIME	BIT(NL80211_STA_INFO_INACTIVE_TIME)
 #define STATION_INFO_LLID			BIT(NL80211_STA_INFO_LLID)
 #define STATION_INFO_PLID			BIT(NL80211_STA_INFO_PLID)
@@ -687,7 +687,7 @@ static int rtw_cfg80211_sync_iftype(_adapter *adapter)
 static u64 rtw_get_systime_us(void)
 {
 // Fix build error for Linux >= 4.19
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 39))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 39) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 	struct timespec64 ts;
 	getboottime64(&ts);
 	return ((u64)ts.tv_sec * 1000000) + ts.tv_nsec / 1000;
@@ -941,7 +941,7 @@ void rtw_cfg80211_ibss_indicate_connect(_adapter *padapter)
 	struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
 	struct wlan_network  *cur_network = &(pmlmepriv->cur_network);
 	struct wireless_dev *pwdev = padapter->rtw_wdev;
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 15, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 15, 0) || RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,2))
 	struct wiphy *wiphy = pwdev->wiphy;
 	int freq = 2412;
 	struct ieee80211_channel *notify_channel;
@@ -990,7 +990,7 @@ void rtw_cfg80211_ibss_indicate_connect(_adapter *padapter)
 			RTW_PRINT(FUNC_ADPT_FMT" BSS not found !!\n", FUNC_ADPT_ARG(padapter));
 	}
 	/* notify cfg80211 that device joined an IBSS */
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 15, 0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 15, 0) || RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,2))
 	freq = rtw_ch2freq(cur_network->network.Configuration.DSConfig);
 	if (1)
 		RTW_INFO("chan: %d, freq: %d\n", cur_network->network.Configuration.DSConfig, freq);
@@ -1112,7 +1112,7 @@ check_bss:
 			rtw_ft_set_status(padapter, RTW_FT_ASSOCIATED_STA);
 #endif
 	} else {
-		#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) || defined(COMPAT_KERNEL_RELEASE)
+		#if ((LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) || defined(COMPAT_KERNEL_RELEASE)) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 		RTW_INFO("pwdev->sme_state(b)=%d\n", pwdev->sme_state);
 		#endif
 
@@ -1123,7 +1123,7 @@ check_bss:
 				, pmlmepriv->assoc_rsp + sizeof(struct rtw_ieee80211_hdr_3addr) + 6
 				, pmlmepriv->assoc_rsp_len - sizeof(struct rtw_ieee80211_hdr_3addr) - 6
 				, WLAN_STATUS_SUCCESS, GFP_ATOMIC);
-		#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) || defined(COMPAT_KERNEL_RELEASE)
+		#if ((LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) || defined(COMPAT_KERNEL_RELEASE)) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 		RTW_INFO("pwdev->sme_state(a)=%d\n", pwdev->sme_state);
 		#endif
 	}
@@ -1178,7 +1178,7 @@ void rtw_cfg80211_indicate_disconnect(_adapter *padapter, u16 reason, u8 locally
 	_enter_critical_bh(&pwdev_priv->connect_req_lock, &irqL);
 
 	if (padapter->ndev_unregistering || !rtw_wdev_not_indic_disco(pwdev_priv)) {
-		#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) || defined(COMPAT_KERNEL_RELEASE)
+		#if ((LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) || defined(COMPAT_KERNEL_RELEASE)) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 		RTW_INFO("pwdev->sme_state(b)=%d\n", pwdev->sme_state);
 
 		if (pwdev->sme_state == CFG80211_SME_CONNECTING) {
@@ -2160,7 +2160,7 @@ static void rtw_cfg80211_fill_mesh_only_sta_info(struct mesh_plink_ent *plink, s
 
 static int cfg80211_rtw_get_station(struct wiphy *wiphy,
 	struct net_device *ndev,
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 16, 0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 16, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 	u8 *mac,
 #else
 	const u8 *mac,
@@ -4590,11 +4590,11 @@ static int
 		#else
 		char *name,
 		#endif
-		#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 1, 0))
+		#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 1, 0) || RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,2))
 		unsigned char name_assign_type,
 		#endif
 		enum nl80211_iftype type,
-		#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0))
+		#if (LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0) || RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,2))
 		u32 *flags,
 		#endif
 		struct vif_params *params)
@@ -5157,7 +5157,7 @@ void dump_station_parameters(void *sel, struct wiphy *wiphy, const struct statio
 }
 
 static int	cfg80211_rtw_add_station(struct wiphy *wiphy, struct net_device *ndev,
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 16, 0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 16, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 	u8 *mac,
 #else
 	const u8 *mac,
@@ -5312,9 +5312,9 @@ exit:
 }
 
 static int	cfg80211_rtw_del_station(struct wiphy *wiphy, struct net_device *ndev,
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 16, 0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 16, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 	u8 *mac
-#elif (LINUX_VERSION_CODE < KERNEL_VERSION(3, 19, 0))
+#elif (LINUX_VERSION_CODE < KERNEL_VERSION(3, 19, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 	const u8 *mac
 #else
 	struct station_del_parameters *params
@@ -5331,7 +5331,7 @@ static int	cfg80211_rtw_del_station(struct wiphy *wiphy, struct net_device *ndev
 	struct mlme_priv *pmlmepriv = &(padapter->mlmepriv);
 	struct sta_priv *pstapriv = &padapter->stapriv;
 
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 19, 0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 19, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 	target_mac = mac;
 #else
 	target_mac = params->mac;
@@ -5418,7 +5418,7 @@ static int	cfg80211_rtw_del_station(struct wiphy *wiphy, struct net_device *ndev
 }
 
 static int	cfg80211_rtw_change_station(struct wiphy *wiphy, struct net_device *ndev,
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 16, 0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 16, 0)  && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 	u8 *mac,
 #else
 	const u8 *mac,
@@ -6879,7 +6879,7 @@ static int cfg80211_rtw_mgmt_tx(struct wiphy *wiphy,
 #else
 	struct net_device *ndev,
 #endif
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0)) || defined(COMPAT_KERNEL_RELEASE)
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2)) || defined(COMPAT_KERNEL_RELEASE)
 	struct ieee80211_channel *chan,
 	#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 38)) || defined(COMPAT_KERNEL_RELEASE)
 	bool offchan,
@@ -6905,7 +6905,7 @@ static int cfg80211_rtw_mgmt_tx(struct wiphy *wiphy,
 #endif
 	u64 *cookie)
 {
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0)) || defined(COMPAT_KERNEL_RELEASE)
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 14, 0) || RHEL_RELEASE_CODE > RHEL_RELEASE_VERSION(7,2)) || defined(COMPAT_KERNEL_RELEASE)
 	struct ieee80211_channel *chan = params->chan;
 	const u8 *buf = params->buf;
 	size_t len = params->len;
@@ -9151,7 +9151,7 @@ static void rtw_cfg80211_preinit_wiphy(_adapter *adapter, struct wiphy *wiphy)
 #endif
 
 #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
 	wiphy->wowlan = wowlan_stub;
 #else
 	wiphy->wowlan = &wowlan_stub;
