@@ -293,7 +293,7 @@ void rtw_regd_apply_flags(struct wiphy *wiphy)
 			&& rtw_odm_dfs_domain_unknown(dvobj)
 			#endif
 		) {
-			#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
+			#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0))
 			ch->flags = (IEEE80211_CHAN_NO_IBSS | IEEE80211_CHAN_PASSIVE_SCAN);
 			#else
 			ch->flags = IEEE80211_CHAN_NO_IR;
@@ -308,7 +308,7 @@ void rtw_regd_apply_flags(struct wiphy *wiphy)
 			#endif
 		) {
 			ch->flags |= IEEE80211_CHAN_RADAR;
-			#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
+			#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0))
 			ch->flags |= (IEEE80211_CHAN_NO_IBSS | IEEE80211_CHAN_PASSIVE_SCAN);
 			#else
 			ch->flags |= IEEE80211_CHAN_NO_IR;
@@ -373,7 +373,7 @@ static void _rtw_regd_init_wiphy(struct rtw_regulatory *reg, struct wiphy *wiphy
 	wiphy->reg_notifier = rtw_reg_notifier;
 #endif
 
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0) && RHEL_RELEASE_CODE < RHEL_RELEASE_VERSION(7,2))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 14, 0))
 	wiphy->flags |= WIPHY_FLAG_CUSTOM_REGULATORY;
 	wiphy->flags &= ~WIPHY_FLAG_STRICT_REGULATORY;
 	wiphy->flags &= ~WIPHY_FLAG_DISABLE_BEACON_HINTS;
