@@ -46,6 +46,23 @@ systemctl start bluetooth.service - starting Bluetooth service if it's in inacti
 
 It should work.
 
+### Make it permanent
+
+If steps above worked fine and in order to avoid periodically having to make `usb_modeswitch` you can make it permanent (Working in **Ubuntu 18.04 LTS**):
+
+1. Edit `usb_modeswitch` rules:
+
+   ```bash
+   sudo nano /lib/udev/rules.d/40-usb_modeswitch.rules
+   ```
+
+2. Append before the end line `LABEL="modeswitch_rules_end"` the following:
+
+   ```
+   # Realtek 8211CU Wifi AC USB
+   ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="/usr/sbin/usb_modeswitch -K -v 0bda -p 1a2b"
+   ```   
+
 ## Build and install without DKMS
 Use following commands:
 ```
