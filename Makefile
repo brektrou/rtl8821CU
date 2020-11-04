@@ -1171,13 +1171,6 @@ endif
 
 ifeq ($(CONFIG_MP_VHT_HW_TX_MODE), y)
 EXTRA_CFLAGS += -DCONFIG_MP_VHT_HW_TX_MODE
-ifeq ($(CONFIG_PLATFORM_I386_PC), y)
-## For I386 X86 ToolChain use Hardware FLOATING
-EXTRA_CFLAGS += -mhard-float
-else
-## For ARM ToolChain use Hardware FLOATING
-EXTRA_CFLAGS += -mfloat-abi=hard
-endif
 endif
 
 ####START RASPBERRY PI SUPPORT
@@ -2104,6 +2097,14 @@ USER_MODULE_NAME := 8822bs
 endif
 endif
 
+endif
+
+ifeq ($(ARCH), i386)
+EXTRA_CFLAGS += -mhard-float
+else ifeq ($(ARCH), x86_64)
+EXTRA_CFLAGS += -mhard-float
+else ifeq ($(ARCH), arm)
+EXTRA_CFLAGS += -mfloat-abi=hard
 endif
 
 ifeq ($(CONFIG_MULTIDRV), y)
