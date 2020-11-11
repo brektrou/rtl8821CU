@@ -576,9 +576,9 @@ void _iqk_reload_iqk_setting_8821c(struct dm_struct *dm, u8 channel,
 				odm_write_4byte(dm, 0x1bd8, ((0xc0000000 >> idx) + 0x1) + (i * 4) + (iqk_info->iqk_cfir_imag[channel][path][idx][i] << 9));
 			}
 			if (idx == 0)
-				odm_set_bb_reg(dm, iqk_apply[path], BIT(0), ~(iqk_info->iqk_fail_report[channel][path][idx]));
+				odm_set_bb_reg(dm, iqk_apply[path], BIT(0), !iqk_info->iqk_fail_report[channel][path][idx]);
 			else
-				odm_set_bb_reg(dm, iqk_apply[path], BIT(10), ~(iqk_info->iqk_fail_report[channel][path][idx]));
+				odm_set_bb_reg(dm, iqk_apply[path], BIT(10), !iqk_info->iqk_fail_report[channel][path][idx]);
 		}
 		odm_set_bb_reg(dm, R_0x1bd8, MASKDWORD, 0x0);
 		odm_set_bb_reg(dm, R_0x1b0c, BIT(13) | BIT(12), 0x0);
