@@ -8,6 +8,16 @@ mkdir -p ~/build
 cd ~/build
 git clone https://github.com/brektrou/rtl8821CU.git
 ```
+## Check the name of the interface
+
+Check the interface name of your wifi adapter using `ifconfig`. Usually, it will be wlan0 by default, but it may vary depends on the kernel and your device. On Ubuntu, for example, it may be named as wlx + MAC address. (https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/) 
+
+If this is the case, you can either disable the feature following the link above, or replace the name used in the driver by
+
+```
+grep -lr . | xargs sed -i '' -e '/ifcfg-wlan0/!s/wlan0/<name of the device>/g'
+```
+
 ## Build and install with DKMS
 
 DKMS is a system which will automatically recompile and install a kernel module when a new kernel gets installed or updated. To make use of DKMS, install the dkms package.
@@ -104,3 +114,4 @@ Use the tool 'iw', please don't use other tools like 'airmon-ng'
 ```
 iw dev wlan0 set monitor none
 ```
+
