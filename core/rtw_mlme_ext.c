@@ -16069,7 +16069,7 @@ void rtw_join_done_chk_ch(_adapter *adapter, int join_res)
 
 						rtw_cfg80211_ch_switch_notify(iface
 							, mlmeext->cur_channel, mlmeext->cur_bwmode, mlmeext->cur_ch_offset
-							, ht_option);
+							, ht_option, 0);
 						#endif
 					}
 				}
@@ -16287,7 +16287,7 @@ exit:
 				the bss freq is updated by channel switch event.
 			*/
 			rtw_cfg80211_ch_switch_notify(adapter,
-				cur_ch, cur_bw, cur_ch_offset, ht_option);
+				cur_ch, cur_bw, cur_ch_offset, ht_option, 1);
 		}
 #endif
 	}
