@@ -4752,7 +4752,9 @@ int rtw_dev_nlo_info_set(struct pno_nlo_info *nlo_info, pno_ssid_t *ssid,
 
 	int i = 0;
 	struct file *fp;
+    #ifdef set_fs
 	mm_segment_t fs;
+    #endif
 	loff_t pos = 0;
 	u8 *source = NULL;
 	long len = 0;
@@ -4789,9 +4791,11 @@ int rtw_dev_nlo_info_set(struct pno_nlo_info *nlo_info, pno_ssid_t *ssid,
 		return 0;
 	}
 
+	#ifdef set_fs
 	fs = get_fs();
 	set_fs(KERNEL_DS);
-
+    #endif
+    
 	source = rtw_zmalloc(2048);
 
 	if (source != NULL) {
@@ -4800,8 +4804,10 @@ int rtw_dev_nlo_info_set(struct pno_nlo_info *nlo_info, pno_ssid_t *ssid,
 		rtw_mfree(source, 2048);
 	}
 
+	#ifdef set_fs
 	set_fs(fs);
 	filp_close(fp, NULL);
+    #endif
 
 	RTW_INFO("-%s-\n", __func__);
 	return 0;
