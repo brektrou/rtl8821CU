@@ -229,7 +229,7 @@ void rtl8821c_phy_haldm_watchdog(PADAPTER Adapter)
 
 #ifdef CONFIG_P2P_PS
 	/* Fw is under p2p powersaving mode, driver should stop dynamic mechanism.
-	 modifed by thomas. 2011.06.11.*/
+	 modified by thomas. 2011.06.11.*/
 	if (Adapter->wdinfo.p2p_ps_mode)
 		bFwPSAwake = _FALSE;
 #endif /*CONFIG_P2P_PS*/
