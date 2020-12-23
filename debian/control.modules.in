@@ -2,7 +2,7 @@ Source: rtl8821cu
 Section: misc
 Priority: optional
 Maintainer: Marc Leeman <m.leeman@televic.com>
-Build-Depends: debhelper (>> 3.0.0), zlib1g-dev, module-assistant
+Build-Depends: debhelper (>> 3.0.0), zlib1g-dev, module-assistant, bc
 Standards-Version: 3.5.8
 
 Package: rtl8821cu-module-#KVERS#
