@@ -77,7 +77,7 @@ If steps above worked fine and in order to avoid periodically having to make `us
 Use following commands:
 ```
 cd ~/build/rtl8821CU
-make
+sudo make
 sudo make install
 ```
 If you later on want to remove it, do the following:
