@@ -1213,6 +1213,7 @@ EXTRA_CFLAGS += -DDM_ODM_SUPPORT_TYPE=0x04
 ifeq ($(CONFIG_PLATFORM_I386_PC), y)
 EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
 EXTRA_CFLAGS += -DCONFIG_IOCTL_CFG80211 -DRTW_USE_CFG80211_STA_EVENT
+EXTRA_CFLAGS += -mhard-float
 SUBARCH := $(shell uname -m | sed -e s/i.86/i386/)
 ARCH ?= $(SUBARCH)
 CROSS_COMPILE ?=
@@ -2099,11 +2100,7 @@ endif
 
 endif
 
-ifeq ($(ARCH), i386)
-EXTRA_CFLAGS += -mhard-float
-else ifeq ($(ARCH), x86_64)
-EXTRA_CFLAGS += -mhard-float
-else ifeq ($(ARCH), arm)
+ifeq ($(ARCH), arm)
 EXTRA_CFLAGS += -mfloat-abi=hard
 endif
 
