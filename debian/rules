@@ -19,7 +19,8 @@ override_dh_auto_install:
 	dh_install -prtl8821cu-dkms -X.o -X.ko platform/   usr/src/rtl8821cu-$(VERSION)
 	dh_install -prtl8821cu-dkms -X.o -X.ko include/    usr/src/rtl8821cu-$(VERSION)
 	dh_install -prtl8821cu-dkms Makefile               usr/src/rtl8821cu-$(VERSION)
-	dh_install -prtl8821cu-dkms rtl8821c.mk						 usr/src/rtl8821cu-$(VERSION)
+	dh_install -prtl8821cu-dkms rtl8821c.mk			   usr/src/rtl8821cu-$(VERSION)
+	dh_install -prtl8821cu-dkms dkms.conf              usr/src/rtl8821cu-$(VERSION)
 	install -d $(XDIR)/debian
 	cd debian && install rules.m-a ../$(XDIR)/debian/rules && cp -r *modules.in* changelog copyright compat *_KVERS_* ../$(XDIR)/debian/
 	cd debian/rtl8821cu-src/usr/src && cp -a ../../../rtl8821cu-dkms/usr/src/rtl8821cu-$(VERSION)/* modules/rtl8821cu-src/ && XZ_OPT=-9 tar --xz -c -f rtl8821cu.tar.xz modules && rm -rf modules
