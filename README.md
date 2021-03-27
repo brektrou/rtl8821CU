@@ -72,6 +72,19 @@ If steps above worked fine and in order to avoid periodically having to make `us
    # Realtek 8211CU Wifi AC USB
    ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="/usr/sbin/usb_modeswitch -K -v 0bda -p 1a2b"
    ```   
+Make sure to set your `ATTR{idVendor}` and the `-v` argument to the left portion of the output of lsusb device ID, and your `ATTR{idProduct}` and `-p` argument to the right portion of the lsusb device ID. For example (for the Cudy AC600 usb wifi adapter) the output from `lsusb` command looks like this:
+
+   ```
+   Bus 001 Device 016: ID 0bda:c811 Realtek Semiconductor Corp. 802.11ac NIC
+   ```
+   
+then your configuration in `/lib/udev/rules.d/40-usb_modeswitch.rules` should be 
+
+   ```
+   # Realtek 8211CU Wifi AC USB
+   ATTR{idVendor}=="0bda", ATTR{idProduct}=="c811", RUN+="/usr/sbin/usb_modeswitch -K -v 0bda -p c811"
+   ```   
+
 
 ## Build and install without DKMS
 Use following commands:
