@@ -1,3 +1,5 @@
+TARGET_ARCH ?= $(shell uname -m | sed -e s/i.86/i386/)
+
 EXTRA_CFLAGS += $(USER_EXTRA_CFLAGS)
 EXTRA_CFLAGS += -O1
 #EXTRA_CFLAGS += -O3
@@ -101,7 +103,7 @@ CONFIG_RTW_SDIO_PM_KEEP_POWER = y
 ###################### MP HW TX MODE FOR VHT #######################
 CONFIG_MP_VHT_HW_TX_MODE = y
 ###################### Platform Related #######################
-CONFIG_PLATFORM_I386_PC = y
+CONFIG_PLATFORM_I386_PC = n
 CONFIG_PLATFORM_ARM_RPI = n
 CONFIG_PLATFORM_ARM64_RPI = n
 CONFIG_PLATFORM_ANDROID_X86 = n
@@ -163,6 +165,16 @@ CONFIG_PLATFORM_NV_TK1_UBUNTU = n
 CONFIG_PLATFORM_RTL8197D = n
 CONFIG_PLATFORM_AML_S905 = n
 CONFIG_PLATFORM_ZTE_ZX296716 = n
+
+ifeq ($(TARGET_ARCH), aarch64)
+CONFIG_PLATFORM_ARM64_RPI = y
+endif
+ifeq ($(TARGET_ARCH), i386)
+CONFIG_PLATFORM_I386_PC = y
+endif
+ifeq ($(TARGET_ARCH), x86_64)
+CONFIG_PLATFORM_I386_PC = y
+endif
 ###############################################################
 
 CONFIG_DRVEXT_MODULE = n
