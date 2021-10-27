@@ -23,6 +23,11 @@
 	#include <rtw_bt_mp.h>
 #endif
 
+static inline UINT ceil_divide(UINT a, UINT b)
+{
+    return (a + b - 1) / b;
+}
+
 #ifdef CONFIG_MP_VHT_HW_TX_MODE
 #define CEILING_POS(X) ((X - (int)(X)) > 0 ? (int)(X + 1) : (int)(X))
 #define CEILING_NEG(X) ((X - (int)(X)) < 0 ? (int)(X - 1) : (int)(X))
