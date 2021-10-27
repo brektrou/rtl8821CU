@@ -3290,10 +3290,9 @@ UINT LDPC_parameter_generator(
 	double	CR = 0.;
 	double	N_pld = (double)N_pld_int;
 	double	N_TCB = (double)N_TCB_int;
-	double	N_CW = 0., N_shrt = 0., N_spcw = 0., N_fshrt = 0.;
-	double	L_LDPC = 0., K_LDPC = 0., L_LDPC_info = 0.;
-	double	N_punc = 0., N_ppcw = 0., N_fpunc = 0., N_rep = 0., N_rpcw = 0., N_frep = 0.;
-	double	R_eff = 0.;
+	double	N_CW = 0., N_shrt = 0.;
+	double	L_LDPC = 0., K_LDPC = 0.;
+	double	N_punc = 0.;
 	UINT	VHTSIGA2B3  = 0;/* extra symbol from VHT-SIG-A2 Bit 3*/
 
 	if (R == 0)
@@ -3334,20 +3333,11 @@ UINT LDPC_parameter_generator(
 	K_LDPC = L_LDPC * CR;
 	/*	Number of shortening bits					max(0, (N_CW * L_LDPC * R) - N_pld)*/
 	N_shrt = (N_CW * K_LDPC - N_pld) > 0. ? (N_CW * K_LDPC - N_pld) : 0.;
-	/*	Number of shortening bits per CW			N_spcw = rtfloor(N_shrt/N_CW)*/
-	N_spcw = rtfloor(N_shrt / N_CW);
-	/*	The first N_fshrt CWs shorten 1 bit more*/
-	N_fshrt = (double)((int)N_shrt % (int)N_CW);
-	/*	Number of data bits for the last N_CW-N_fshrt CWs*/
-	L_LDPC_info = K_LDPC - N_spcw;
 	/*	Number of puncturing bits*/
 	N_punc = (N_CW * L_LDPC - N_TCB - N_shrt) > 0. ? (N_CW * L_LDPC - N_TCB - N_shrt) : 0.;
 	if (((N_punc > .1 * N_CW * L_LDPC * (1. - CR)) && (N_shrt < 1.2 * N_punc * CR / (1. - CR))) ||
 	    (N_punc > 0.3 * N_CW * L_LDPC * (1. - CR))) {
-		/*cout << "*** N_TCB and N_punc are Recomputed ***" << endl;*/
 		VHTSIGA2B3 = 1;
-		N_TCB += (double)N_CBPSS * N_SS * m_STBC;
-		N_punc = (N_CW * L_LDPC - N_TCB - N_shrt) > 0. ? (N_CW * L_LDPC - N_TCB - N_shrt) : 0.;
 	} else
 		VHTSIGA2B3 = 0;
 
