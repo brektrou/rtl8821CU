@@ -3338,8 +3338,8 @@ UINT LDPC_parameter_generator(
 	N_shrt = (N_CW * K_LDPC > N_pld) ? (N_CW * K_LDPC - N_pld) : 0;
 	/*	Number of puncturing bits*/
 	N_punc = (N_CW * L_LDPC_12 * 12 > N_TCB + N_shrt) ? (N_CW * L_LDPC_12 * 12 - N_TCB - N_shrt) : 0;
-	if (((N_punc > .1 * N_CW * L_LDPC_12 * (12 - CR12)) && (N_shrt < 1.2 * N_punc * CR12 / (12 - CR12))) ||
-	    (N_punc > 0.3 * N_CW * L_LDPC_12 * (12 - CR12))) {
+	if (((N_punc * 10 > N_CW * L_LDPC_12 * (12 - CR12)) && (N_shrt * 10 < 12 * N_punc * CR12 / (12 - CR12))) ||
+	    (N_punc * 10 > 3 * N_CW * L_LDPC_12 * (12 - CR12))) {
 		VHTSIGA2B3 = 1;
 	} else
 		VHTSIGA2B3 = 0;
