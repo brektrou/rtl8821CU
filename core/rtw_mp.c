@@ -3359,7 +3359,7 @@ void PMAC_Nsym_generator(
 	UCHAR	TX_RATE = pPMacTxInfo->TX_RATE;
 
 	UINT R, R_list[10] = {0, 0, 2, 0, 2, 1, 2, 3, 2, 3};
-	double CR = 0;
+	UINT CR12 = 0;
 	UINT N_SD, N_BPSC_list[10] = {1, 2, 2, 4, 4, 6, 6, 6, 8, 8};
 	UINT N_BPSC = 0, N_CBPS = 0, N_DBPS = 0, N_ES = 0, N_SYM = 0, N_pld = 0, N_TCB = 0;
 	int D_R = 0;
@@ -3389,22 +3389,22 @@ void PMAC_Nsym_generator(
 
 		switch (R) {
 		case 0:
-			CR = .5;
+			CR12 = 6;
 			break;
 		case 1:
-			CR = 2. / 3.;
+			CR12 = 8;
 			break;
 		case 2:
-			CR = 3. / 4.;
+			CR12 = 9;
 			break;
 		case 3:
-			CR = 5. / 6.;
+			CR12 = 10;
 			break;
 		}
 
 		N_BPSC = N_BPSC_list[MCS_temp];
 		N_CBPS = N_BPSC * N_SD * pPMacPktInfo->Nss;
-		N_DBPS = (UINT)((double)N_CBPS * CR);
+		N_DBPS = N_CBPS * CR12 / 12;
 
 		if (pPMacTxInfo->bLDPC == FALSE) {
 			N_ES = ceil_divide(N_DBPS * pPMacPktInfo->Nss, 1200);
@@ -3435,21 +3435,21 @@ void PMAC_Nsym_generator(
 
 		switch (R) {
 		case 0:
-			CR = .5;
+			CR12 = 6;
 			break;
 		case 1:
-			CR = 2. / 3.;
+			CR12 = 8;
 			break;
 		case 2:
-			CR = 3. / 4.;
+			CR12 = 9;
 			break;
 		case 3:
-			CR = 5. / 6.;
+			CR12 = 10;
 			break;
 		}
 		N_BPSC = N_BPSC_list[pPMacPktInfo->MCS];
 		N_CBPS = N_BPSC * N_SD * pPMacPktInfo->Nss;
-		N_DBPS = (UINT)((double)N_CBPS * CR);
+		N_DBPS = N_CBPS * CR12 / 12;
 		if (pPMacTxInfo->bLDPC == FALSE) {
 			if (pPMacTxInfo->bSGI)
 				N_ES = ceil_divide(N_DBPS, 2160);
