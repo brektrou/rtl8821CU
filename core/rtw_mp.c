@@ -3293,9 +3293,9 @@ UINT LDPC_parameter_generator(
 )
 {
 	UINT	CR12 = 0;
-	double	N_CW = 0., N_shrt = 0.;
+	UINT	N_CW = 0, N_shrt = 0;
 	UINT	L_LDPC_12 = 0, K_LDPC = 0;
-	double	N_punc = 0.;
+	UINT	N_punc = 0;
 	UINT	VHTSIGA2B3  = 0;/* extra symbol from VHT-SIG-A2 Bit 3*/
 
 	if (R == 0)
@@ -3308,36 +3308,36 @@ UINT LDPC_parameter_generator(
 		CR12 = 10;
 
 	if (N_TCB <= 648) {
-		N_CW	= 1.;
+		N_CW	= 1;
 		if (N_TCB >= N_pld + 76 * (12 - CR12))
 			L_LDPC_12	= 1296 / 12;
 		else
 			L_LDPC_12	= 648 / 12;
 	} else if (N_TCB <= 1296) {
-		N_CW	= 1.;
+		N_CW	= 1;
 		if (N_TCB >= N_pld + 122 * (12 - CR12))
 			L_LDPC_12	= 1944 / 12;
 		else
 			L_LDPC_12	= 1296 / 12;
 	} else if	(N_TCB <= 1944) {
-		N_CW	= 1.;
+		N_CW	= 1;
 		L_LDPC_12	= 1944 / 12;
 	} else if (N_TCB <= 2592) {
-		N_CW	= 2.;
+		N_CW	= 2;
 		if (N_TCB >= N_pld + 243 * (12 - CR12))
 			L_LDPC_12	= 1944 / 12;
 		else
 			L_LDPC_12	= 1296 / 12;
 	} else {
-		N_CW = ceil(N_pld / (162 * CR12));
+		N_CW = ceil_divide(N_pld, 162 * CR12);
 		L_LDPC_12	= 1944 / 12;
 	}
 	/*	Number of information bits per CW*/
 	K_LDPC = L_LDPC_12 * CR12;
 	/*	Number of shortening bits					max(0, (N_CW * L_LDPC_12 * 12 * R) - N_pld)*/
-	N_shrt = (N_CW * K_LDPC > N_pld) ? (N_CW * K_LDPC - N_pld) : 0.;
+	N_shrt = (N_CW * K_LDPC > N_pld) ? (N_CW * K_LDPC - N_pld) : 0;
 	/*	Number of puncturing bits*/
-	N_punc = (N_CW * L_LDPC_12 * 12 > N_TCB + N_shrt) ? (N_CW * L_LDPC_12 * 12 - N_TCB - N_shrt) : 0.;
+	N_punc = (N_CW * L_LDPC_12 * 12 > N_TCB + N_shrt) ? (N_CW * L_LDPC_12 * 12 - N_TCB - N_shrt) : 0;
 	if (((N_punc > .1 * N_CW * L_LDPC_12 * (12 - CR12)) && (N_shrt < 1.2 * N_punc * CR12 / (12 - CR12))) ||
 	    (N_punc > 0.3 * N_CW * L_LDPC_12 * (12 - CR12))) {
 		VHTSIGA2B3 = 1;
