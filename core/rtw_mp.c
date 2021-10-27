@@ -28,21 +28,6 @@ static inline UINT ceil_divide(UINT a, UINT b)
     return (a + b - 1) / b;
 }
 
-#ifdef CONFIG_MP_VHT_HW_TX_MODE
-#define CEILING_POS(X) ((X - (int)(X)) > 0 ? (int)(X + 1) : (int)(X))
-#define CEILING_NEG(X) ((X - (int)(X)) < 0 ? (int)(X - 1) : (int)(X))
-#define ceil(X) (((X) > 0) ? CEILING_POS(X) : CEILING_NEG(X))
-
-int rtfloor(float x)
-{
-	int i = x - 2;
-	while
-	(++i <= x - 1)
-		;
-	return i;
-}
-#endif
-
 #ifdef CONFIG_MP_INCLUDED
 u32 read_macreg(_adapter *padapter, u32 addr, u32 sz)
 {
