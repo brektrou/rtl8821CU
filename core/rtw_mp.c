@@ -3279,17 +3279,15 @@ void PMAC_Get_Pkt_Param(
 
 
 UINT LDPC_parameter_generator(
-	UINT N_pld_int,
+	UINT N_pld,
 	UINT N_CBPSS,
 	UINT N_SS,
 	UINT R,
 	UINT m_STBC,
-	UINT N_TCB_int
+	UINT N_TCB
 )
 {
 	double	CR = 0.;
-	double	N_pld = (double)N_pld_int;
-	double	N_TCB = (double)N_TCB_int;
 	double	N_CW = 0., N_shrt = 0.;
 	double	L_LDPC = 0., K_LDPC = 0.;
 	double	N_punc = 0.;
@@ -3304,22 +3302,22 @@ UINT LDPC_parameter_generator(
 	else if (R == 3)
 		CR = 5. / 6.;
 
-	if (N_TCB <= 648.) {
+	if (N_TCB <= 648) {
 		N_CW	= 1.;
 		if (N_TCB >= N_pld + 912.*(1. - CR))
 			L_LDPC	= 1296.;
 		else
 			L_LDPC	= 648.;
-	} else if (N_TCB <= 1296.) {
+	} else if (N_TCB <= 1296) {
 		N_CW	= 1.;
-		if (N_TCB >= (double)N_pld + 1464.*(1. - CR))
+		if (N_TCB >= N_pld + 1464.*(1. - CR))
 			L_LDPC	= 1944.;
 		else
 			L_LDPC	= 1296.;
-	} else if	(N_TCB <= 1944.) {
+	} else if	(N_TCB <= 1944) {
 		N_CW	= 1.;
 		L_LDPC	= 1944.;
-	} else if (N_TCB <= 2592.) {
+	} else if (N_TCB <= 2592) {
 		N_CW	= 2.;
 		if (N_TCB >= N_pld + 2916.*(1. - CR))
 			L_LDPC	= 1944.;
