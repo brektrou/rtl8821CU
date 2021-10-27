@@ -3139,11 +3139,11 @@ void CCK_generator(
 	PRT_PMAC_PKT_INFO	pPMacPktInfo
 )
 {
-	double	ratio = 0;
+	UINT	ratio11 = 0;
 	bool	crc16_in[32] = {0}, crc16_out[16] = {0};
 	bool LengthExtBit;
-	double LengthExact;
-	double LengthPSDU;
+	UINT LengthExact11;
+	UINT LengthPSDU;
 	UCHAR i;
 	UINT PacketLength = pPMacTxInfo->PacketLength;
 
@@ -3155,41 +3155,41 @@ void CCK_generator(
 	switch (pPMacPktInfo->MCS) {
 	case 0:
 		pPMacTxInfo->SignalField = 0xA;
-		ratio = 8;
+		ratio11 = 88;
 		/*CRC16_in(1,0:7)=[0 1 0 1 0 0 0 0]*/
 		crc16_in[1] = crc16_in[3] = 1;
 		break;
 	case 1:
 		pPMacTxInfo->SignalField = 0x14;
-		ratio = 4;
+		ratio11 = 44;
 		/*CRC16_in(1,0:7)=[0 0 1 0 1 0 0 0];*/
 		crc16_in[2] = crc16_in[4] = 1;
 		break;
 	case 2:
 		pPMacTxInfo->SignalField = 0x37;
-		ratio = 8.0 / 5.5;
+		ratio11 = 16;
 		/*CRC16_in(1,0:7)=[1 1 1 0 1 1 0 0];*/
 		crc16_in[0] = crc16_in[1] = crc16_in[2] = crc16_in[4] = crc16_in[5] = 1;
 		break;
 	case 3:
 		pPMacTxInfo->SignalField = 0x6E;
-		ratio = 8.0 / 11.0;
+		ratio11 = 8;
 		/*CRC16_in(1,0:7)=[0 1 1 1 0 1 1 0];*/
 		crc16_in[1] = crc16_in[2] = crc16_in[3] = crc16_in[5] = crc16_in[6] = 1;
 		break;
 	}
 
-	LengthExact = PacketLength * ratio;
-	LengthPSDU = ceil(LengthExact);
+	LengthExact11 = PacketLength * ratio11;
+	LengthPSDU = ceil_divide(LengthExact11, 11);
 
 	if ((pPMacPktInfo->MCS == 3) &&
-	    ((LengthPSDU - LengthExact) >= 0.727 || (LengthPSDU - LengthExact) <= -0.727))
+	    (LengthPSDU * 11 >= 8 + LengthExact11 || LengthPSDU * 11 + 8 <= LengthExact11))
 		LengthExtBit = 1;
 	else
 		LengthExtBit = 0;
 
 
-	pPMacTxInfo->LENGTH = (UINT)LengthPSDU;
+	pPMacTxInfo->LENGTH = LengthPSDU;
 	/* CRC16_in(1,16:31) = LengthPSDU[0:15]*/
 	for (i = 0; i < 16; i++)
 		crc16_in[i + 16] = (pPMacTxInfo->LENGTH >> i) & 0x1;
