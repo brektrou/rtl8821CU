@@ -117,3 +117,14 @@ Use the tool 'iw', please don't use other tools like 'airmon-ng'
 iw dev wlan0 set monitor none
 ```
 
+### simplest way to install this driver (for noob)
+```
+sudo apt update
+sudo apt install build-essential git dkms
+git clone https://github.com/brektrou/rtl8821CU.git
+cd rtl8821CU
+chmod +x dkms-install.sh
+sudo ./dkms-install.sh
+sudo modprobe 8821cu
+```
+
