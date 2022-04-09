@@ -1288,9 +1288,10 @@ void dump_txpwr_lmt(void *sel, _adapter *adapter)
 
 	RTW_PRINT_SEL(sel, "txpwr_lmt_2g_cck_ofdm_state:0x%02x\n", rfctl->txpwr_lmt_2g_cck_ofdm_state);
 	#ifdef CONFIG_IEEE80211_BAND_5GHZ
-	if (IS_HARDWARE_TYPE_JAGUAR_AND_JAGUAR2(adapter))
+	if (IS_HARDWARE_TYPE_JAGUAR_AND_JAGUAR2(adapter)) {
 		RTW_PRINT_SEL(sel, "txpwr_lmt_5g_cck_ofdm_state:0x%02x\n", rfctl->txpwr_lmt_5g_cck_ofdm_state);
 		RTW_PRINT_SEL(sel, "txpwr_lmt_5g_20_40_ref:0x%02x\n", rfctl->txpwr_lmt_5g_20_40_ref);
+	}
 	#endif
 	RTW_PRINT_SEL(sel, "\n");
 
