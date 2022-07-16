@@ -2,6 +2,14 @@
 
 Before build this driver make sure `make`, `gcc`, `linux-header`/`kernel-devel`, `bc` and `git` have been installed.
 
+## The fast way
+Just clone this repo, cd to it and run the script (wifinstall.sh)
+```
+git clone https://github.com/RoHiro/RTL8811CU-8821CU-Install-Deb-.git
+cd RTL8811CU-8821CU-Install-Deb-
+sudo bash ./wifinstall
+```
+##  If you want to do it yourself
 ## First, clone this repository
 ```
 mkdir -p ~/build
