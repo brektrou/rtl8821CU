@@ -16,6 +16,7 @@
 
 #include <drv_types.h>
 #include <hal_data.h>
+#include <ieee80211.h>
 
 #if defined(PLATFORM_LINUX) && defined (PLATFORM_WINDOWS)
 

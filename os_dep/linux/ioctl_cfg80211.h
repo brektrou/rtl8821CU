@@ -346,8 +346,7 @@ void rtw_cfg80211_deinit_rfkill(struct wiphy *wiphy);
 
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 4, 0))  && !defined(COMPAT_KERNEL_RELEASE)
 #define rtw_cfg80211_send_rx_assoc(adapter, bss, buf, len) cfg80211_send_rx_assoc((adapter)->pnetdev, buf, len)
-#else
-#define rtw_cfg80211_send_rx_assoc(adapter, bss, buf, len) cfg80211_send_rx_assoc((adapter)->pnetdev, bss, buf, len)
+
 #endif
 
 #if (LINUX_VERSION_CODE < KERNEL_VERSION(3, 6, 0))

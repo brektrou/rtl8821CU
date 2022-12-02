@@ -1,4 +1,4 @@
 #DHCP client
-DEVICE=wlan0
+DEVICE=wlo2
 BOOTPROTO=dhcp
 ONBOOT=yes
