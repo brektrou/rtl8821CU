@@ -15,7 +15,7 @@
 #define _RTW_MLME_C_
 
 #include <hal_data.h>
-
+#include <ieee80211.h>
 extern void indicate_wx_scan_complete_event(_adapter *padapter);
 extern u8 rtw_do_join(_adapter *padapter);
 

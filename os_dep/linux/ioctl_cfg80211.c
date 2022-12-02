@@ -417,7 +417,7 @@ u8 rtw_cfg80211_ch_switch_notify(_adapter *adapter, u8 ch, u8 bw, u8 offset, u8 
 	if (ret != _SUCCESS)
 		goto exit;
 
-	cfg80211_ch_switch_notify(adapter->pnetdev, &chdef);
+	cfg80211_ch_switch_notify(adapter->pnetdev, &chdef, NULL);
 
 #else
 	int freq = rtw_ch2freq(ch);
@@ -1085,7 +1085,7 @@ check_bss:
 		#endif
 
 		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
-		roam_info.bssid = cur_network->network.MacAddress;
+		//roam_info.bssid = cur_network->network.MacAddress;
 		roam_info.req_ie = pmlmepriv->assoc_req + sizeof(struct rtw_ieee80211_hdr_3addr) + 2;
 		roam_info.req_ie_len = pmlmepriv->assoc_req_len - sizeof(struct rtw_ieee80211_hdr_3addr) - 2;
 		roam_info.resp_ie = pmlmepriv->assoc_rsp + sizeof(struct rtw_ieee80211_hdr_3addr) + 6;
@@ -4223,7 +4223,7 @@ void rtw_cfg80211_indicate_sta_assoc(_adapter *padapter, u8 *pmgmt_frame, uint f
 		pwdev->iftype = NL80211_IFTYPE_STATION;
 		#endif /* CONFIG_PLATFORM_MSTAR */
 		RTW_INFO("iftype=%d before call cfg80211_send_rx_assoc()\n", pwdev->iftype);
-		rtw_cfg80211_send_rx_assoc(padapter, NULL, pmgmt_frame, frame_len);
+		//~ rtw_cfg80211_send_rx_assoc(padapter, NULL, pmgmt_frame, frame_len);
 		RTW_INFO("iftype=%d after call cfg80211_send_rx_assoc()\n", pwdev->iftype);
 		pwdev->iftype = NL80211_IFTYPE_AP;
 		/* cfg80211_rx_action(padapter->pnetdev, freq, pmgmt_frame, frame_len, GFP_ATOMIC); */
@@ -4282,7 +4282,7 @@ void rtw_cfg80211_indicate_sta_disassoc(_adapter *padapter, const u8 *da, unsign
 	#elif (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 37)) && !defined(CONFIG_CFG80211_FORCE_COMPATIBLE_2_6_37_UNDER)
 	rtw_cfg80211_rx_mgmt(wdev, freq, 0, mgmt_buf, frame_len, GFP_ATOMIC);
 	#else /* COMPAT_KERNEL_RELEASE */
-	cfg80211_send_disassoc(padapter->pnetdev, mgmt_buf, frame_len);
+	//~ cfg80211_send_disassoc(padapter->pnetdev, mgmt_buf, frame_len);
 	/* cfg80211_rx_action(padapter->pnetdev, freq, mgmt_buf, frame_len, GFP_ATOMIC); */
 	#endif /* COMPAT_KERNEL_RELEASE */
 #endif /* defined(RTW_USE_CFG80211_STA_EVENT) */
@@ -9378,12 +9378,12 @@ int rtw_hostapd_acs_dump_survey(struct wiphy *wiphy, struct net_device *netdev, 
 
 static struct cfg80211_ops rtw_cfg80211_ops = {
 	.change_virtual_intf = cfg80211_rtw_change_iface,
-	.add_key = cfg80211_rtw_add_key,
-	.get_key = cfg80211_rtw_get_key,
-	.del_key = cfg80211_rtw_del_key,
-	.set_default_key = cfg80211_rtw_set_default_key,
+	//.add_key = cfg80211_rtw_add_key,
+	//.get_key = cfg80211_rtw_get_key,
+	//.del_key = cfg80211_rtw_del_key,
+	//.set_default_key = cfg80211_rtw_set_default_key,
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 30))
-	.set_default_mgmt_key = cfg80211_rtw_set_default_mgmt_key,
+	//.set_default_mgmt_key = cfg80211_rtw_set_default_mgmt_key,
 #endif
 #if defined(CONFIG_GTK_OL) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 1, 0))
 	.set_rekey_data = cfg80211_rtw_set_rekey_data,
@@ -9413,7 +9413,7 @@ static struct cfg80211_ops rtw_cfg80211_ops = {
 #else
 	.start_ap = cfg80211_rtw_start_ap,
 	.change_beacon = cfg80211_rtw_change_beacon,
-	.stop_ap = cfg80211_rtw_stop_ap,
+	//.stop_ap = cfg80211_rtw_stop_ap,
 #endif
 
 #if CONFIG_RTW_MACADDR_ACL && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 9, 0))
@@ -9679,10 +9679,10 @@ void rtw_wdev_unregister(struct wireless_dev *wdev)
 	rtw_cfg80211_indicate_scan_done(adapter, _TRUE);
 
 	#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 11, 0)) || defined(COMPAT_KERNEL_RELEASE)
-	if (wdev->current_bss) {
-		RTW_INFO(FUNC_ADPT_FMT" clear current_bss by cfg80211_disconnected\n", FUNC_ADPT_ARG(adapter));
-		rtw_cfg80211_indicate_disconnect(adapter, 0, 1);
-	}
+	//~ if (wdev->current_bss) {
+		//~ RTW_INFO(FUNC_ADPT_FMT" clear current_bss by cfg80211_disconnected\n", FUNC_ADPT_ARG(adapter));
+		//~ rtw_cfg80211_indicate_disconnect(adapter, 0, 1);
+	//~ }
 	#endif
 
 	if (pwdev_priv->pmon_ndev) {
