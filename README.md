@@ -38,6 +38,16 @@ If you later on want to remove it, run:
 ```
 ./dkms-remove.sh
 ```
+### setup for Raspberry Pi/1&2
+```
+sudo apt install git bc bison flex libssl-dev
+```
+```
+ sudo wget https://raw.githubusercontent.com/RPi-Distro/rpi-source/master/rpi-source -O /usr/local/bin/rpi-source && sudo chmod +x /usr/local/bin/rpi-source && /usr/local/bin/rpi-source -q --tag-update
+```
+```
+rpi-source
+```
 
 ### Plug your USB-wifi-adapter into your PC
 If wifi can be detected, congratulations.
