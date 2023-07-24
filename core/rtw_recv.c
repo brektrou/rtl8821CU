@@ -4063,10 +4063,9 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power;
 	rt_len += 1;
 
-
 	/* dBm Antenna Noise */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_DBM_ANTNOISE);
-	hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power - pattrib->phy_info.rx_snr
+	hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power - pattrib->phy_info.rx_snr[0]; // TODO understand how to manage the four values
 	rt_len += 1;
 
 #if 0
