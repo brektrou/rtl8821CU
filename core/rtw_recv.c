@@ -4063,12 +4063,13 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power;
 	rt_len += 1;
 
-#if 0
+
 	/* dBm Antenna Noise */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_DBM_ANTNOISE);
-	hdr_buf[rt_len] = 0;
+	hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power - pattrib->phy_info.rx_snr
 	rt_len += 1;
 
+#if 0
 	/* Signal Quality */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_LOCK_QUALITY);
 	hdr_buf[rt_len] = pattrib->phy_info.signal_quality;
