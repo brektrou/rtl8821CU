@@ -4073,7 +4073,7 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	//}
 
 	// TODO understand how to manage the four values
-	hdr_buf[rt_len] = pattrib->phy_info.rx_snr[0]; //pattrib->phy_info.recv_signal_power - (s8)(avg_snr/4);
+	hdr_buf[rt_len] = 0; //pattrib->phy_info.rx_snr[0]; //pattrib->phy_info.recv_signal_power - (s8)(avg_snr/4);
 	rt_len += 1;
 
 #if 0
