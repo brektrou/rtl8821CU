@@ -4066,14 +4066,14 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	/* dBm Antenna Noise */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_DBM_ANTNOISE);
 
-	//s16 avg_snr = 0;
-	//int i;
-	//for (i = 0; i < pHalData->NumTotalRFPath; i++) {
-	//	avg_snr += pattrib->phy_info.rx_snr[i];
-	//}
+	s16 avg_snr = 0;
+	int i;
+	for (i = 0; i < pHalData->NumTotalRFPath; i++) {
+		avg_snr += pattrib->phy_info.rx_snr[i];
+	}
 
 	// TODO understand how to manage the four values
-	hdr_buf[rt_len] = 0; //pattrib->phy_info.rx_snr[0]; //pattrib->phy_info.recv_signal_power - (s8)(avg_snr/4);
+	hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power - (s8)(avg_snr/4);
 	rt_len += 1;
 
 #if 0
