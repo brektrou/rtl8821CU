@@ -4084,9 +4084,9 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 #endif
 
 	/* Antenna */
-	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_ANTENNA);
-	hdr_buf[rt_len] = 0; /* pHalData->rf_type; */
-	rt_len += 1;
+	//rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_ANTENNA);
+	//hdr_buf[rt_len] = 0; /* pHalData->rf_type; */
+	//rt_len += 1;
 
 	/* RX flags */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_RX_FLAGS);
