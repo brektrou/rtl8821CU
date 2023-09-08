@@ -4,7 +4,7 @@
 
 Before build this driver make sure `make`, `gcc`, `linux-header`/`kernel-devel`, `bc` and `git` have been installed.
 
-## First, clone this repository
+## First, clone this repository,
 ```
 mkdir -p ~/build
 cd ~/build
