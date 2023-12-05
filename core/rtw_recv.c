@@ -4040,7 +4040,6 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 
 	/* channel flags */
 	tmp_16bit = 0;
-	s8 snr = 0;
 	if (pHalData->current_band_type == 0)
 		tmp_16bit |= cpu_to_le16(IEEE80211_CHAN_2GHZ);
 	else
@@ -4050,15 +4049,9 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 		if (pattrib->data_rate < 4) {
 			/* CCK */
 			tmp_16bit |= cpu_to_le16(IEEE80211_CHAN_CCK);
-
-			// understand with value take when CCK
-			// snr = pattrib->phy_info.rx_snr[0];
 		} else {
 			/* OFDM */
 			tmp_16bit |= cpu_to_le16(IEEE80211_CHAN_OFDM);
-
-			// when is OFMD, take the first value of the array for snr
-			snr = pattrib->phy_info.rx_snr[0];
 		}
 	} else
 		tmp_16bit |= cpu_to_le16(IEEE80211_CHAN_DYN);
@@ -4067,18 +4060,18 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 
 	/* dBm Antenna Signal */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_DBM_ANTSIGNAL);
-	hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power;
-
+	hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power; 
 	rt_len += 1;
 
 	/* dBm Antenna Noise */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_DBM_ANTNOISE);
+
+	s8 snr = pattrib->phy_info.rx_snr[0];
 	if (snr == 0) {
 		hdr_buf[rt_len] = 0;
 	} else {
 		hdr_buf[rt_len] = pattrib->phy_info.recv_signal_power - (snr);	
 	}
-
 	rt_len += 1;
 
 	/* Signal Quality */
@@ -4087,9 +4080,9 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	rt_len += 1;
 
 	/* Antenna */
-	//rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_ANTENNA);
-	//hdr_buf[rt_len] = 0; /* pHalData->rf_type; */
-	//rt_len += 1;
+	// rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_ANTENNA);
+	// hdr_buf[rt_len] = 0; /* pHalData->rf_type; */
+	// rt_len += 1;
 
 	/* RX flags */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_RX_FLAGS);
@@ -4097,7 +4090,7 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	tmp_16bit = cpu_to_le16(0);
 	memcpy(ptr, &tmp_16bit, 1);
 #endif
-	rt_len += 2;
+	rt_len += 1;
 
 	/* MCS information */
 	if (pattrib->data_rate >= 12 && pattrib->data_rate < 44) {
