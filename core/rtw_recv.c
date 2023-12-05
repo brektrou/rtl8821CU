@@ -3961,7 +3961,7 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	struct ieee80211_radiotap_header *rtap_hdr = NULL;
 	u8 *ptr = NULL;
 
-	u8 hdr_buf[66] = {0};
+	u8 hdr_buf[64] = {0};
 	u16 rt_len = 8;
 
 	/* create header */
@@ -4074,15 +4074,17 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	}
 	rt_len += 1;
 
+#if 0
 	/* Signal Quality */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_LOCK_QUALITY);
 	hdr_buf[rt_len] = pattrib->phy_info.signal_quality;
 	rt_len += 1;
+#endif
 
 	/* Antenna */
-	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_ANTENNA);
-	hdr_buf[rt_len] = pHalData->rf_type;
-	rt_len += 1;
+	// rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_ANTENNA);
+	// hdr_buf[rt_len] = pHalData->rf_type;
+	// rt_len += 1;
 
 	/* RX flags */
 	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_RX_FLAGS);
