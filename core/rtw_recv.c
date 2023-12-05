@@ -4080,17 +4080,17 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	rt_len += 1;
 
 	/* Antenna */
-	// rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_ANTENNA);
-	// hdr_buf[rt_len] = 0; /* pHalData->rf_type; */
-	// rt_len += 1;
+	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_ANTENNA);
+	hdr_buf[rt_len] = pHalData->rf_type;
+	rt_len += 1;
 
 	/* RX flags */
-	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_RX_FLAGS);
+	// rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_RX_FLAGS);
 #if 0
 	tmp_16bit = cpu_to_le16(0);
 	memcpy(ptr, &tmp_16bit, 1);
 #endif
-	rt_len += 1;
+	// rt_len += 1;
 
 	/* MCS information */
 	if (pattrib->data_rate >= 12 && pattrib->data_rate < 44) {
