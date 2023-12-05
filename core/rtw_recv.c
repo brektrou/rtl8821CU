@@ -3961,7 +3961,7 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	struct ieee80211_radiotap_header *rtap_hdr = NULL;
 	u8 *ptr = NULL;
 
-	u8 hdr_buf[64] = {0};
+	u8 hdr_buf[66] = {0};
 	u16 rt_len = 8;
 
 	/* create header */
@@ -4085,12 +4085,12 @@ static sint fill_radiotap_hdr(_adapter *padapter, union recv_frame *precvframe, 
 	rt_len += 1;
 
 	/* RX flags */
-	// rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_RX_FLAGS);
+	rtap_hdr->it_present |= (1 << IEEE80211_RADIOTAP_RX_FLAGS);
 #if 0
 	tmp_16bit = cpu_to_le16(0);
 	memcpy(ptr, &tmp_16bit, 1);
 #endif
-	// rt_len += 1;
+	rt_len += 2;
 
 	/* MCS information */
 	if (pattrib->data_rate >= 12 && pattrib->data_rate < 44) {
